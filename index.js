@@ -9,9 +9,14 @@ const router = require('./routes')
 const mongoose = require('mongoose')
 const CONFIG = require('./config/config')
 const session = require('koa-session')
+const bodyParser = require('koa-bodyparser')
+
 mongoose.connect(CONFIG.mongodb)
 
 const app = new Koa()
+
+// 接系post请求
+app.use(bodyParser())
 
 // session
 app.keys = ['somethings']
