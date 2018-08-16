@@ -18,5 +18,26 @@ module.exports = {
       const result = await UserModel.create(user)
       ctx.body = result
     }
+  },
+  async signin (ctx, next) {
+    if (ctx.method === 'POST') {
+      const {name, password} = ctx.request.body
+      const user = await UserModel.findOne({name})
+      if (user && await bcrypt.compare(password, user.password)) {
+        ctx.session.user = {
+          _id: user._id,
+          name: user.name,
+          isAdmin: user.isAdmin,
+          email: user.email
+        }
+        ctx.body = '登录成功'
+        // 登录成功 把用户信息存进session
+      } else {
+        ctx.body = '用户名或密码错误'
+      }
+    }
+  },
+  async signout (ctx, next) {
+    ctx.session = null
   }
 }
