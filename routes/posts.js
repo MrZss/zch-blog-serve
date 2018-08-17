@@ -11,5 +11,19 @@ module.exports = {
       ctx.body = { success: '发表文章成功' }
       console.log(res)
     }
+  },
+  async detail (ctx, next) {
+    const post = await PostModel.findByid(ctx.request.body.id)
+      .populate({ path: 'author', select: 'name' })
+    let detail = {
+      title: post.title,
+      post
+
+    }
+    ctx.body = JSON.parse(detail)
+  },
+  async list (ctx, next) {
+    const posts = await PostModel.find({})
+    ctx.body = JSON.parse(posts)
   }
 }
