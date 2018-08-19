@@ -13,13 +13,13 @@ module.exports = {
     }
   },
   async detail (ctx, next) {
-    const post = await PostModel.findByid(ctx.request.body.id)
+    const post = await PostModel.findById(ctx.request.body.id)
       .populate({ path: 'author', select: 'name' })
     let detail = {
       title: post.title,
       post
     }
-    ctx.body = JSON.parse(detail)
+    ctx.body = detail
   },
   async list (ctx, next) {
     const posts = await PostModel.find({})
