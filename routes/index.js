@@ -10,7 +10,8 @@ module.exports = (app) => {
   // 获取文章列表
   // router.post('/posts', require('./posts').list)
   router.post('/posts/new', require('./posts').create)
-  router.post('/posts/detail', require('./posts').create)
+  router.post('/posts/detail', require('./posts').detail)
+  router.post('/posts/list', require('./posts').list)
   // router.post('/posts/:id/edit', require('./posts').edit)
   // router.post('/posts/:id/delete', require('./posts').destroy)
 

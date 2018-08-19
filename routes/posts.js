@@ -18,12 +18,11 @@ module.exports = {
     let detail = {
       title: post.title,
       post
-
     }
     ctx.body = JSON.parse(detail)
   },
   async list (ctx, next) {
     const posts = await PostModel.find({})
-    ctx.body = JSON.parse(posts)
+    ctx.body = posts
   }
 }
