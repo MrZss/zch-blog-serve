@@ -46,6 +46,7 @@ module.exports = {
           success: false,
           msg: '文章不存在！'
         }
+        return
       }
       if (post.author.toString() !== ctx.session.user._id.toString()) {
         ctx.body = {
@@ -64,12 +65,14 @@ module.exports = {
           success: false,
           msg: '文章不存在！'
         }
+        return
       }
       if (post.author.toString() !== ctx.session.user._id.toString()) {
         ctx.body = {
           success: false,
           msg: '没有权限！'
         }
+        return
       }
       const { title, content } = ctx.request.body
       await PostModel.findByIdAndUpdate(ctx.request.body.id, {
@@ -88,12 +91,14 @@ module.exports = {
         success: false,
         msg: '文章不存在！'
       }
+      return
     }
     if (post.author.toString() !== ctx.session.user._id.toString()) {
       ctx.body = {
         success: false,
         msg: '没有权限！'
       }
+      return
     }
     await PostModel.findByIdAndRemove(ctx.params.id)
     ctx.body = {
