@@ -1,4 +1,5 @@
 const PostModel = require('../models/post')
+const CommentModel = require('../models/comment')
 
 module.exports = {
   async create (ctx, next) {
@@ -15,11 +16,13 @@ module.exports = {
   async detail (ctx, next) {
     if (ctx.method === 'POST') {
       const post = await PostModel.findById(ctx.request.body.id).populate({path: 'author', select: 'name'})
+      const comments = await CommentModel.find({ postId: ctx.request.body.id })
       let detail = {
         success: true,
         data: {
           title: post.title,
-          post
+          post,
+          comments
         }
       }
       ctx.body = detail

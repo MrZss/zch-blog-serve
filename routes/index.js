@@ -33,19 +33,18 @@ async function isAdmin (ctx, next) {
 
 module.exports = (app) => {
   router.get('/', require('./home').index)
-  // 定义用户 路由分配
+  // 用户
   router.post('/signup', require('./user').signup)
   router.post('/signin', require('./user').signin)
   router.post('/signout', require('./user').signout)
-  // 定义文章 路由分配
-  // 获取文章列表
-  // router.post('/posts', require('./posts').list)
+  // 文章
   router.post('/posts/new', isAdmin, require('./posts').create)
   router.post('/posts/detail', isLoginUser, require('./posts').detail)
   router.post('/posts/list', require('./posts').list)
   router.post('/posts/update', isAdmin, require('./posts').update)
-  // router.post('/posts/:id/edit', require('./posts').edit)
-  // router.post('/posts/:id/delete', require('./posts').destroy)
+  // 评论
+  router.post('/comments/new', isLoginUser, require('./comments').create)
+  router.post('/comments/delete', isLoginUser, require('./comments').delete)
 
   app.use(router.routes()).use(router.allowedMethods())
 }
