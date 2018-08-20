@@ -10,11 +10,12 @@ const mongoose = require('mongoose')
 const CONFIG = require('./config/config')
 const session = require('koa-session')
 const bodyParser = require('koa-bodyparser')
+const responseHandler = require('./middlewares/responseHandler')
 
 mongoose.connect(CONFIG.mongodb)
 
 const app = new Koa()
-
+app.use(responseHandler())
 // 接系post请求
 app.use(bodyParser())
 

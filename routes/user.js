@@ -39,5 +39,8 @@ module.exports = {
   },
   async signout (ctx, next) {
     ctx.session = null
+    ctx.body = {
+      success: true
+    }
   }
 }
