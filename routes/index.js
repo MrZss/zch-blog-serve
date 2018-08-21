@@ -1,4 +1,8 @@
-const router = require('koa-router')()
+const router = require('koa-router')
+// const C = require('../controllers/comments.js'),
+//   T = require('../controllers/tags.js'),
+//   U = require('../controllers/user.js'),
+//   M = require('../controllers/posts.js')
 
 // 中间件判断是否登录
 async function isLoginUser (ctx, next) {
@@ -32,7 +36,7 @@ async function isAdmin (ctx, next) {
 }
 
 module.exports = (app) => {
-  router.get('/', require('./home').index)
+  router.post('/', require('./user').signup)
   // 用户
   router.post('/signup', require('./user').signup)
   router.post('/signin', require('./user').signin)
