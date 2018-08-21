@@ -45,6 +45,9 @@ module.exports = (app) => {
   // 评论
   router.post('/comments/new', isLoginUser, require('./comments').create)
   router.post('/comments/delete', isLoginUser, require('./comments').delete)
-
+  // 分类
+  router.post('/category', require('./category').list)
+  router.post('/category/new', isAdmin, require('./category').create)
+  router.post('/category/:id/delete', isAdmin, require('./category').delete)
   app.use(router.routes()).use(router.allowedMethods())
 }

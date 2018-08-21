@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 
 const CommentSchema = new Schema({
   postId: {
-    type: Schema.Type.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'Post'
   },
   from: {
