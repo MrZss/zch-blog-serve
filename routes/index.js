@@ -1,8 +1,11 @@
-const router = require('koa-router')
+const config = require('../configs')
+const Router = require('koa-router')
+const router = new Router({prefix: config.app.routerBaseApi})
 // const C = require('../controllers/comments.js'),
 //   T = require('../controllers/tags.js'),
 //   U = require('../controllers/user.js'),
 //   M = require('../controllers/posts.js')
+const A = require('../controller/article.js')
 
 // 中间件判断是否登录
 async function isLoginUser (ctx, next) {
@@ -42,16 +45,17 @@ module.exports = (app) => {
   router.post('/signin', require('./user').signin)
   router.post('/signout', require('./user').signout)
   // 文章
-  router.post('/posts/new', isAdmin, require('./posts').create)
-  router.post('/posts/detail', isLoginUser, require('./posts').detail)
-  router.post('/posts/list', require('./posts').list)
-  router.post('/posts/update', isAdmin, require('./posts').update)
+  router.post('/article/createArticle', isAdmin, A.createArticle)
+  router.post('/article/getArticleById', isLoginUser, A.getArticleById)
+  router.post('/article/getAllArticles', A.getAllArticles)
+  router.post('/article/updateArticle', isAdmin, A.updateArticle)
+  router.post('/article/deleteArticleById', isAdmin, A.deleteArticleById)
   // 评论
   router.post('/comments/new', isLoginUser, require('./comments').create)
   router.post('/comments/delete', isLoginUser, require('./comments').delete)
   // 分类
-  router.post('/category', require('./category').list)
-  router.post('/category/new', isAdmin, require('./category').create)
-  router.post('/category/:id/delete', isAdmin, require('./category').delete)
+  router.post('/category', require('./tags').list)
+  router.post('/category/new', isAdmin, require('./tags').create)
+  router.post('/category/:id/delete', isAdmin, require('./tags').delete)
   app.use(router.routes()).use(router.allowedMethods())
 }
