@@ -1,8 +1,9 @@
 const UserModel = require('../models/user')
+// const config = require('../configs')
 const bcrypt = require('bcryptjs')
 
-module.exports = {
-  async signup (ctx, next) {
+class UserController {
+  static async signup (ctx, next) {
     if (ctx.method === 'POST') {
       const salt = await bcrypt.genSalt(10)
       let {name, email, password} = ctx.request.body
@@ -18,8 +19,8 @@ module.exports = {
       const result = await UserModel.create(user)
       ctx.body = result
     }
-  },
-  async signin (ctx, next) {
+  }
+  static async signin (ctx, next) {
     if (ctx.method === 'POST') {
       const {name, password} = ctx.request.body
       const user = await UserModel.findOne({name})
@@ -36,11 +37,12 @@ module.exports = {
         ctx.body = '用户名或密码错误'
       }
     }
-  },
-  async signout (ctx, next) {
+  }
+  static async signout (ctx, next) {
     ctx.session = null
     ctx.body = {
       success: true
     }
   }
 }
+exports = module.exports = UserController

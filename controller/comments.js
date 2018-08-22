@@ -1,14 +1,14 @@
 const CommentModel = require('../models/comment')
 
-module.exports = {
-  async create (ctx, next) {
+class commentController {
+  static async createComment (ctx, next) {
     const comment = Object.assign(ctx.request.body, {from: ctx.session.user._id})
     await CommentModel.create(comment)
     ctx.body = {
       success: true
     }
-  },
-  async delete (ctx, next) {
+  }
+  static async deleteComment (ctx, next) {
     const comment = await CommentModel.findById(ctx.request.body.id)
     if (!comment) {
       ctx.body = {
@@ -30,3 +30,4 @@ module.exports = {
     }
   }
 }
+exports = module.exports = commentController
