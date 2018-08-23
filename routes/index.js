@@ -1,11 +1,10 @@
-const config = require('../configs')
-const Router = require('koa-router')
-const router = new Router({prefix: config.app.routerBaseApi})
+const router = require('koa-router')()
+// const router = new Router({prefix: config.app.routerBaseApi})
 // const C = require('../controllers/comments.js'),
-const A = require('../controller/article.js')
-const T = require('../controller/tags.js')
-const U = require('../controller/user.js')
-const C = require('../controller/comments.js')
+const A = require('../controller/article')
+const T = require('../controller/tags')
+const U = require('../controller/user')
+const C = require('../controller/comments')
 
 // 中间件判断是否登录
 async function isLoginUser (ctx, next) {
@@ -37,7 +36,6 @@ async function isAdmin (ctx, next) {
   }
   await next()
 }
-
 module.exports = (app) => {
   router.post('/', U.signup)
   // 用户

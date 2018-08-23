@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs')
 
 class UserController {
   static async signup (ctx, next) {
+    console.log(333)
     if (ctx.method === 'POST') {
       const salt = await bcrypt.genSalt(10)
       let {name, email, password} = ctx.request.body
@@ -22,6 +23,7 @@ class UserController {
   }
   static async signin (ctx, next) {
     if (ctx.method === 'POST') {
+      console.log(ctx.request.body)
       const {name, password} = ctx.request.body
       const user = await UserModel.findOne({name})
       if (user && await bcrypt.compare(password, user.password)) {
