@@ -2,7 +2,7 @@ const router = require('koa-router')()
 // const router = new Router({prefix: config.app.routerBaseApi})
 // const C = require('../controllers/comments.js'),
 const A = require('../controller/article')
-const T = require('../controller/tags')
+const T = require('../controller/tag')
 const U = require('../controller/user')
 const C = require('../controller/comments')
 
@@ -37,14 +37,14 @@ async function isAdmin (ctx, next) {
   await next()
 }
 module.exports = (app) => {
-  router.post('/', U.signup)
+  // router.post('/', U.signup)
   // 用户
   router.post('/signup', U.signup)
   router.post('/signin', U.signin)
   router.post('/signout', U.signout)
   // 文章
   router.post('/article/createArticle', isAdmin, A.createArticle)
-  router.post('/article/getArticleById', isLoginUser, A.getArticleById)
+  router.post('/article/getArticleById', A.getArticleById)
   router.post('/article/getAllArticles', A.getAllArticles)
   router.post('/article/updateArticle', isAdmin, A.updateArticle)
   router.post('/article/deleteArticleById', isAdmin, A.deleteArticleById)
@@ -55,5 +55,6 @@ module.exports = (app) => {
   router.post('/tag/getAllTags', T.getAllTags)
   router.post('/tag/createTag', isAdmin, T.createTag)
   router.post('/tag/deleteTag', isAdmin, T.deleteTag)
+  router.post('/tag/updateTag', isAdmin, T.updateTag)
   app.use(router.routes()).use(router.allowedMethods())
 }

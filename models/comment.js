@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const CommentSchema = new Schema({
+const commentSchema = new Schema({
   postId: {
     type: Schema.Types.ObjectId,
     ref: 'Post'
@@ -27,4 +27,4 @@ const CommentSchema = new Schema({
   }
 })
 
-module.exports = mongoose.model('Comment', CommentSchema)
+exports = module.exports = mongoose.model('comment', commentSchema)

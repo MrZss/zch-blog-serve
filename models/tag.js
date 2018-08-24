@@ -6,10 +6,6 @@ const tagSchema = new Schema({
     type: String,
     required: true
   },
-  title: {
-    type: String,
-    required: true
-  },
   desc: {
     typr: String
   },
@@ -21,4 +17,4 @@ const tagSchema = new Schema({
   }
 })
 
-module.export = mongoose.model('tag', tagSchema)
+exports = module.exports = mongoose.model('tag', tagSchema)

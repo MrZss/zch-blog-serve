@@ -19,9 +19,9 @@ const articleSchema = new Schema({
     type: Number,
     default: 0
   },
-  category: {
+  tag: {
     type: Schema.Types.ObjectId,
-    ref: 'Category'
+    ref: 'tag'
   },
   meta: {
     createdAt: {
@@ -44,4 +44,4 @@ articleSchema.pre('save', function (next) {
   next()
 })
 
-module.exports = mongoose.model('Post', articleSchema)
+exports = module.exports = mongoose.model('article', articleSchema)

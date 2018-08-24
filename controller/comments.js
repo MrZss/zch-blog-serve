@@ -1,33 +1,36 @@
-const CommentModel = require('../models/comment')
+const Comment = require('../models/comment')
 
 class commentController {
-  static async createComment (ctx, next) {
-    const comment = Object.assign(ctx.request.body, {from: ctx.session.user._id})
-    await CommentModel.create(comment)
-    ctx.body = {
+  // 创建评论
+  static async createComment (ctx) {
+    const comment = Object.assign(ctx.request.body, {
+      from: ctx.session.user._id
+    })
+    let result = await Comment.create(comment)
+    ctx.success({
+      msg: '评论创建成功！',
+      data: result,
       success: true
-    }
+    })
   }
-  static async deleteComment (ctx, next) {
-    const comment = await CommentModel.findById(ctx.request.body.id)
-    if (!comment) {
-      ctx.body = {
-        success: false,
-        msg: '留言不存在'
-      }
-      return
-    }
+  // 删除评论
+  static async deleteComment (ctx) {
+    const comment = await Comment.findById(ctx.request.body.id).catch(() => {
+      ctx.throw(500, '评论不存在')
+    })
     if (comment.from.toString() !== ctx.session.user._id.toString()) {
-      ctx.body = {
-        success: false,
-        msg: '没有权限'
-      }
-      return
+      ctx.success({
+        msg: '无权限删除此评论！',
+        success: false
+      })
     }
-    await CommentModel.findByIdAndRemove(ctx.request.body.id)
-    ctx.body = {
+    await Comment.findByIdAndRemove(ctx.request.body.id).catch(() => {
+      ctx.throw(500, '删除操作执行失败')
+    })
+    ctx.success({
+      msg: '删除成功！',
       success: true
-    }
+    })
   }
 }
 exports = module.exports = commentController
