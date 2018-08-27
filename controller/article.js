@@ -20,7 +20,7 @@ class ArticleController {
     let result = await article.save().catch(() => {
       ctx.throw(500, '数据存储失败！')
     })
-    await result.populate('tags').execPopulate().catch(() => {
+    await result.populate('tag').execPopulate().catch(() => {
       ctx.throw(500, '关联标签错误！')
     })
     ctx.success({

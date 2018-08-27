@@ -15,7 +15,8 @@ class tagController {
     if (oldTag !== null) {
       return ctx.success({
         msg: '这是已经存在的标签！',
-        data: oldTag
+        data: oldTag,
+        success: false
       })
     }
     let tag = new Tag({
@@ -26,7 +27,8 @@ class tagController {
     })
     ctx.success({
       msg: '添加成功！',
-      data: result
+      data: result,
+      success: true
     })
   }
   // 获取所有标签
@@ -34,7 +36,8 @@ class tagController {
     let result = await Tag.find()
     ctx.success({
       msg: '获得所有标签成功!',
-      data: result
+      data: result,
+      success: true
     })
   }
   // 修改标签名称
@@ -54,7 +57,8 @@ class tagController {
       })
     ctx.success({
       msg: '修改成功',
-      data: result
+      data: result,
+      success: true
     })
   }
   // 删除标签
